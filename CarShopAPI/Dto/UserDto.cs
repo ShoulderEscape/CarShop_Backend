@@ -7,7 +7,7 @@ namespace CarShopAPI
         public int Id { get; set; }
         public string UserName { get; set; }
         public string Password { get; set; }
-        public List<Car> CarList { get; set; }
+        public List<int> CarIds { get; set; }
 
     }
 }

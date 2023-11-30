@@ -1,4 +1,6 @@
 using CarShopAPI.Data;
+using CarShopAPI.Data.Repositories;
+using CarShopAPI.Data.UserRepositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 
@@ -27,6 +29,7 @@ namespace CarShopAPI
                                       });
             });
             builder.Services.AddDbContext<DataContext>(options => options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
+            builder.Services.AddScoped<IUserRepository, UserRepository>();
             builder.Services.AddAutoMapper(typeof(MappingProfile));
             
 
