@@ -2,7 +2,7 @@ using Entites;
 
 namespace CarShopAPI
 {
-    public class UserDto 
+    public class UserDto
     {
         public int Id { get; set; }
         public string UserName { get; set; }

@@ -1,6 +1,6 @@
 using CarShopAPI.Data;
+using Data.Repositories;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
 
 namespace CarShopAPI
 {
@@ -16,6 +16,11 @@ namespace CarShopAPI
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+
+            // Confiugure Logging
+            builder.Logging.AddConsole();
+            builder.Logging.SetMinimumLevel(LogLevel.Debug);
+
             builder.Services.AddCors(options =>
             {
                 options.AddPolicy("CorsPolicy",
@@ -26,9 +31,10 @@ namespace CarShopAPI
                                                 .AllowAnyMethod();
                                       });
             });
+
             builder.Services.AddDbContext<DataContext>(options => options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
+            builder.Services.AddScoped<IArticleRepository, ArticleRepository>();
             builder.Services.AddAutoMapper(typeof(MappingProfile));
-            
 
             var app = builder.Build();
 
