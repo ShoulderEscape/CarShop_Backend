@@ -23,7 +23,7 @@ namespace CarShopAPI
                 options.AddPolicy("CorsPolicy",
                                       policy =>
                                       {
-                                          policy.WithOrigins("http://localhost:3000")
+                                          policy.WithOrigins("http://localhost:4200")
                                                 .AllowAnyHeader()
                                                 .AllowAnyMethod();
                                       });
@@ -44,8 +44,9 @@ namespace CarShopAPI
 
             app.UseHttpsRedirection();
 
-            app.UseAuthorization();
+            app.UseCors("CorsPolicy");
 
+            app.UseAuthorization();
 
             app.MapControllers();
 
