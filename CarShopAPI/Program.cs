@@ -1,5 +1,7 @@
 using CarShopAPI.Data;
 using Data.Repositories;
+using CarShopAPI.Data.Repositories;
+using CarShopAPI.Data.UserRepositories;
 using Microsoft.EntityFrameworkCore;
 
 namespace CarShopAPI
@@ -26,7 +28,7 @@ namespace CarShopAPI
                 options.AddPolicy("CorsPolicy",
                                       policy =>
                                       {
-                                          policy.WithOrigins("http://localhost:3000")
+                                          policy.WithOrigins("http://localhost:4200")
                                                 .AllowAnyHeader()
                                                 .AllowAnyMethod();
                                       });
@@ -34,6 +36,7 @@ namespace CarShopAPI
 
             builder.Services.AddDbContext<DataContext>(options => options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
             builder.Services.AddScoped<IArticleRepository, ArticleRepository>();
+            builder.Services.AddScoped<IUserRepository, UserRepository>();
             builder.Services.AddAutoMapper(typeof(MappingProfile));
 
             var app = builder.Build();
@@ -47,8 +50,9 @@ namespace CarShopAPI
 
             app.UseHttpsRedirection();
 
-            app.UseAuthorization();
+            app.UseCors("CorsPolicy");
 
+            app.UseAuthorization();
 
             app.MapControllers();
 
