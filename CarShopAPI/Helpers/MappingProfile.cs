@@ -1,6 +1,6 @@
 using AutoMapper;
-using Entites;
 using CarShopAPI.Dto;
+using Entites;
 
 namespace CarShopAPI
 {

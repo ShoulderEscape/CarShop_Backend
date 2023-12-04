@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Entites
+﻿namespace Entites
 {
     public class User
     {
-        public int Id {  get; set; }
+        public int Id { get; set; }
         public string UserName { get; set; }
         public string Password { get; set; }
         public List<int>? CarIds {  get; set; } 
