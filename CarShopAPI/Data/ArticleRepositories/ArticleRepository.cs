@@ -39,7 +39,7 @@ public class ArticleRepository : IArticleRepository
         return await _context.Cars.FindAsync(id);
     }
 
-    public Task<List<Car>> GetArticle()
+    public Task<List<Car>> GetArticles()
     {
         return _context.Cars.ToListAsync();
     }

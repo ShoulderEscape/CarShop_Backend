@@ -1,5 +1,3 @@
-using Entites;
-
 namespace CarShopAPI
 {
     public class UserDto

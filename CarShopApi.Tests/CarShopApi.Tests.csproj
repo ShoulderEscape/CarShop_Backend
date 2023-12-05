@@ -19,6 +19,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\CarShopAPI\CarShopAPI.csproj" />
+    <ProjectReference Include="..\Entites\Entites.csproj" />
   </ItemGroup>
 
 </Project>

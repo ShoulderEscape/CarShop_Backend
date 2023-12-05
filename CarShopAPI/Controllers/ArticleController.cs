@@ -4,6 +4,7 @@ using Data.Repositories;
 using Entites;
 using Microsoft.AspNetCore.Mvc;
 
+
 namespace CarShopAPI.Controllers
 {
     [Route("CarShop/[controller]")]
@@ -27,7 +28,7 @@ namespace CarShopAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<List<CarDto>>> GetArticles()
         {
-            var cars = await _articleRepository.GetArticle();
+            var cars = await _articleRepository.GetArticles();
             var carDto = _mapper.Map<List<CarDto>>(cars);
             return Ok(carDto);
         }
