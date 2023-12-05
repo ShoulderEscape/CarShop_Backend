@@ -1,9 +1,8 @@
-﻿using Entites;
-using Microsoft.AspNetCore.Mvc;
-using CarShopAPI.Data.Repositories;
+﻿using AutoMapper;
 using CarShopAPI.Data.UserRepositories;
-using AutoMapper;
 using CarShopAPI.Dto;
+using Entites;
+using Microsoft.AspNetCore.Mvc;
 
 namespace CarShopAPI.Controllers
 {
@@ -21,7 +20,7 @@ namespace CarShopAPI.Controllers
         {
             _logger = logger;
             _mapper = mapper;
-            _userRepository = userRepository; 
+            _userRepository = userRepository;
         }
 
         [HttpPost]
@@ -37,8 +36,8 @@ namespace CarShopAPI.Controllers
             try
             {
                 var createdUser = await _userRepository.AddUser(newUser);
-                
-                if(createdUser == null)
+
+                if (createdUser == null)
                 {
                     _logger.LogWarning($"Failed creating user");
                     return BadRequest();

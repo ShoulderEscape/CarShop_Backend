@@ -7,7 +7,7 @@ namespace Data.Repositories
         Task<Car> AddArticle(Car car);
         Task<Car> DeleteCarById(int id);
         Task<Car> GetArticle(int id);
-        Task<List<Car>> GetArticle();
+        Task<List<Car>> GetArticles();
         Task<Car> UpdateCar(int id, Car car);
     }
 }

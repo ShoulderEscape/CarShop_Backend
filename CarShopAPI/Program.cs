@@ -1,7 +1,7 @@
 using CarShopAPI.Data;
-using Data.Repositories;
 using CarShopAPI.Data.Repositories;
 using CarShopAPI.Data.UserRepositories;
+using Data.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 namespace CarShopAPI
