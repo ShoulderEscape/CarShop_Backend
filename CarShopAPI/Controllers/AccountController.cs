@@ -1,9 +1,8 @@
-﻿using Entites;
-using Microsoft.AspNetCore.Mvc;
-using CarShopAPI.Data.Repositories;
+﻿using AutoMapper;
 using CarShopAPI.Data.UserRepositories;
-using AutoMapper;
 using CarShopAPI.Dto;
+using Entites;
+using Microsoft.AspNetCore.Mvc;
 
 namespace CarShopAPI.Controllers
 {
@@ -21,35 +20,44 @@ namespace CarShopAPI.Controllers
         {
             _logger = logger;
             _mapper = mapper;
-            _userRepository = userRepository; 
+            _userRepository = userRepository;
         }
 
         [HttpPost]
         public async Task<ActionResult<User>> PostUser(RegistrationDto registerDto)
         {
-            _logger.LogWarning($"HEWLOOOOOOOOOOOOOOOOO{registerDto.UserName}");
-            Console.WriteLine("asdasdasdasdasdasd");
+            var usernameExists = await _userRepository.CheckUsername(registerDto.UserName);
+            if (usernameExists)
+            {
+                return BadRequest("Username already in use.");
+            }
+
             var newUser = new User
             {
                 UserName = registerDto.UserName,
-                Password = registerDto.Password,
+                Password = HashPassword(registerDto.Password),
             };
             try
             {
                 var createdUser = await _userRepository.AddUser(newUser);
-                
-                if(createdUser == null)
+
+                if (createdUser == null)
                 {
                     _logger.LogWarning($"Failed creating user");
                     return BadRequest();
                 }
                 _logger.LogInformation($"Succsefully created user");
-                return Ok(CreatedAtAction("GetTodo", createdUser));
+                return Ok(CreatedAtAction("Added User", createdUser));
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error when trying to register"); return StatusCode(500, "Internal server error haha");
+                _logger.LogError(ex, "Error when trying to register"); return StatusCode(500, "Internal server error");
             }
+        }
+
+        private string HashPassword(string password)
+        {
+            return BCrypt.Net.BCrypt.HashPassword(password);
         }
 
 

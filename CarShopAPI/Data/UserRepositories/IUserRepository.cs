@@ -6,5 +6,7 @@ namespace CarShopAPI.Data.UserRepositories
     {
         Task<User> AddUser(User user);
 
+        Task<bool> CheckUsername(string username);
+
     }
 }
