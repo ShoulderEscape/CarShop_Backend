@@ -26,12 +26,16 @@ namespace CarShopAPI.Controllers
         [HttpPost]
         public async Task<ActionResult<User>> PostUser(RegistrationDto registerDto)
         {
-            _logger.LogWarning($"HEWLOOOOOOOOOOOOOOOOO{registerDto.UserName}");
-            Console.WriteLine("asdasdasdasdasdasd");
+            var usernameExists = await _userRepository.CheckUsername(registerDto.UserName);
+            if (usernameExists)
+            {
+                return BadRequest("Username already in use.");
+            }
+
             var newUser = new User
             {
                 UserName = registerDto.UserName,
-                Password = registerDto.Password,
+                Password = HashPassword(registerDto.Password),
             };
             try
             {
@@ -43,12 +47,17 @@ namespace CarShopAPI.Controllers
                     return BadRequest();
                 }
                 _logger.LogInformation($"Succsefully created user");
-                return Ok(CreatedAtAction("GetTodo", createdUser));
+                return Ok(CreatedAtAction("Added User", createdUser));
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error when trying to register"); return StatusCode(500, "Internal server error haha");
+                _logger.LogError(ex, "Error when trying to register"); return StatusCode(500, "Internal server error");
             }
+        }
+
+        private string HashPassword(string password)
+        {
+            return BCrypt.Net.BCrypt.HashPassword(password);
         }
 
 

@@ -1,5 +1,6 @@
 ﻿using CarShopAPI.Data.UserRepositories;
 using Entites;
+using Microsoft.EntityFrameworkCore;
 
 namespace CarShopAPI.Data.Repositories
 {
@@ -19,5 +20,9 @@ namespace CarShopAPI.Data.Repositories
             return user;
         }
 
+        public async Task<bool> CheckUsername(string username)
+        {
+            return await _context.Users.AnyAsync(u => u.UserName == username);
+        }
     }
 }
