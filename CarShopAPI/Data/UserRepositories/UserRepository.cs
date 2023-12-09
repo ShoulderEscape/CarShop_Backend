@@ -20,9 +20,11 @@ namespace CarShopAPI.Data.Repositories
             return user;
         }
 
-        public async Task<bool> CheckUsername(string username)
+        public async Task<User> CheckUsername(string username)
         {
-            return await _context.Users.AnyAsync(u => u.UserName == username);
+            return await _context.Users.FirstOrDefaultAsync(u => u.UserName == username);
         }
+
+
     }
 }

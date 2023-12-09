@@ -18,7 +18,6 @@ namespace CarShopAPI.Controllers
         private readonly IUserRepository _userRepository;
         private readonly IMapper _mapper;
         private readonly ILogger<AccountController> _logger;
-        public static User user = new User();
         private readonly IConfiguration _config;
 
         public AccountController(IUserRepository userRepository,
@@ -33,18 +32,21 @@ namespace CarShopAPI.Controllers
         [HttpPost("register")]
         public async Task<ActionResult<User>> PostUser(RegistrationDto registerDto)
         {
-            var usernameExists = await _userRepository.CheckUsername(registerDto.UserName);
-            if (usernameExists)
+            var existingUser = await _userRepository.CheckUsername(registerDto.UserName);
+            if (existingUser  != null)
             {
                 return BadRequest("Username already in use.");
             }
 
-            user.UserName = registerDto.UserName;
-            user.Password = HashPassword(registerDto.Password);
+            var newUser = new User
+            {
+                UserName = registerDto.UserName,
+                Password = HashPassword(registerDto.Password)
+            };
 
             try
             {
-                var createdUser = await _userRepository.AddUser(user);
+                var createdUser = await _userRepository.AddUser(newUser);
 
                 if (createdUser == null)
                 {
@@ -60,11 +62,12 @@ namespace CarShopAPI.Controllers
             }
         }
 
+
         [HttpPost("login")]
         public async Task<ActionResult<User>> LoginUser(RegistrationDto registerDto)
         {
-            var usernameExists = await _userRepository.CheckUsername(registerDto.UserName);
-            if (!usernameExists)
+            var user = await _userRepository.CheckUsername(registerDto.UserName);
+            if (user == null)
             {
                 return BadRequest("Username not found.");
             }
