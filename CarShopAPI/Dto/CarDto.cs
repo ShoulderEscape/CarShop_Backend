@@ -13,6 +13,7 @@ public class CarDto
     public int ContactNumber { get; set; }
     public int Price { get; set; }
     public string? Description { get; set; }
-    public byte[]? Imagelink { get; set; }
+    public string? Imagelink { get; set; }
     public DateTime AuctionDateTime { get; set; }
+ 
 }

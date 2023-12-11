@@ -80,7 +80,7 @@ namespace CarShopApi.Tests
                 ContactNumber = 073020954,
                 FuelType = "LaddHybrid",
                 Description = "Fin Volvo som har agerat företagsbil",
-                Imagelink = [1,2,3]
+                Imagelink = ""
             };
 
             _articleRepositoryMock.Setup(x => x.AddArticle(newArticle)).ReturnsAsync(createdArticle);
@@ -157,7 +157,7 @@ namespace CarShopApi.Tests
                 ContactNumber = 073020954,
                 FuelType = "LaddHybrid",
                 Description = "Fin Volvo som har agerat företagsbil",
-                Imagelink = [1, 2, 3]
+                Imagelink = ""
 
             };
             _articleRepositoryMock.Setup(x => x.GetArticle(articleId)).ReturnsAsync(createdArticle);

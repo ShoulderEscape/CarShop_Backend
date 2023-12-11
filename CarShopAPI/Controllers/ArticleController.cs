@@ -46,6 +46,7 @@ namespace CarShopAPI.Controllers
         [HttpPost("CreateCar")]
         public async Task<ActionResult<CarDto>> PostArticle(Car car)
         {
+                
             var createdArticle = await _articleRepository.AddArticle(car);
             return CreatedAtAction("GetArticle", new { id = createdArticle.Id }, value: createdArticle);
         }
