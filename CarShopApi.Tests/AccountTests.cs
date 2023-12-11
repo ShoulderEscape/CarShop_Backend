@@ -6,6 +6,7 @@ using Entites;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Moq;
+using Microsoft.Extensions.Configuration;
 
 namespace CarShopApi.Tests
 {
@@ -15,8 +16,7 @@ namespace CarShopApi.Tests
         private Mock<IMapper> mockMapper;
         private Mock<ILogger<AccountController>> mockLogger;
         private AccountController accountController;
-
-
+        private Mock<IConfiguration> mockConfiguration;
 
         [SetUp]
         public void Setup()
@@ -25,10 +25,10 @@ namespace CarShopApi.Tests
             mockRepository = new Mock<IUserRepository>();
             mockLogger = new Mock<ILogger<AccountController>>();
             mockMapper = new Mock<IMapper>();
-            accountController = new AccountController(mockRepository.Object, mockMapper.Object, mockLogger.Object);
+            mockConfiguration = new Mock<IConfiguration>();
+            accountController = new AccountController(mockRepository.Object, mockMapper.Object, mockLogger.Object, mockConfiguration.Object);
 
         }
-
         [Test]
         public async Task Should_return_status_code_200_when_creating_user()
         {

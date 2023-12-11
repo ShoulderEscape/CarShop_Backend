@@ -43,7 +43,7 @@ namespace CarShopAPI.Controllers
             var articleDto = _mapper.Map<CarDto>(article);
             return Ok(articleDto);
         }
-        [HttpPost]
+        [HttpPost("CreateCar")]
         public async Task<ActionResult<CarDto>> PostArticle(Car car)
         {
             var createdArticle = await _articleRepository.AddArticle(car);
