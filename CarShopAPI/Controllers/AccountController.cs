@@ -33,7 +33,7 @@ namespace CarShopAPI.Controllers
         public async Task<ActionResult<User>> PostUser(RegistrationDto registerDto)
         {
             var existingUser = await _userRepository.CheckUsername(registerDto.UserName);
-            if (existingUser  != null)
+            if (existingUser != null)
             {
                 return BadRequest("Username already in use.");
             }
@@ -72,7 +72,7 @@ namespace CarShopAPI.Controllers
                 return BadRequest("Username not found.");
             }
 
-            if(!BCrypt.Net.BCrypt.Verify(registerDto.Password, user.Password))
+            if (!BCrypt.Net.BCrypt.Verify(registerDto.Password, user.Password))
             {
                 return BadRequest("Wrong password");
             }
@@ -89,8 +89,8 @@ namespace CarShopAPI.Controllers
 
         private string CreateToken(User user)
         {
-            List<Claim> claims = new List<Claim> 
-            { 
+            List<Claim> claims = new List<Claim>
+            {
                 new Claim(ClaimTypes.Name, user.UserName)
             };
 

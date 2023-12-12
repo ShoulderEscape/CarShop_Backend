@@ -4,9 +4,9 @@ using CarShopAPI.Data.UserRepositories;
 using CarShopAPI.Dto;
 using Entites;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Moq;
-using Microsoft.Extensions.Configuration;
 
 namespace CarShopApi.Tests
 {
