@@ -74,5 +74,29 @@ namespace CarShopApi.Tests
 
         }
 
+        [Test]
+        public async Task Should_return_status_code_200_when_login_user()
+        {
+            // Arrange
+            var registerDto = new RegistrationDto { UserName = "Test123", Password = "1Password" };
+            var hashedPassword = BCrypt.Net.BCrypt.HashPassword(registerDto.Password);
+            var user = new User { UserName = registerDto.UserName, Password = hashedPassword };
+
+            // Ensure the CheckUsername returns a non-null user
+            mockRepository.Setup(repo => repo.CheckUsername(It.IsAny<string>())).ReturnsAsync(user);
+            mockConfiguration.Setup(config => config.GetSection("Jwt:Token").Value).Returns("my very very top of the line secret key with a crazy long name because why not");
+
+            // Act
+            var result = await accountController.LoginUser(new RegistrationDto { UserName = registerDto.UserName, Password = registerDto.Password });
+
+            // Assert
+            var okResult = result.Result as OkObjectResult;
+            Assert.NotNull(okResult);
+            Assert.AreEqual(200, okResult.StatusCode);
+
+            // Additional checks
+            var token = okResult.Value as string;
+            Assert.NotNull(token);
+        }
     }
 }
