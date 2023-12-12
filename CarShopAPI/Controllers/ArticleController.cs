@@ -3,8 +3,6 @@ using CarShopAPI.Dto;
 using Data.Repositories;
 using Entites;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Hosting;
-using Microsoft.AspNetCore.Hosting;
 
 
 namespace CarShopAPI.Controllers
@@ -54,7 +52,7 @@ namespace CarShopAPI.Controllers
             [FromForm] int mileAge, [FromForm] string fuelType, [FromForm] string transmission, [FromForm] string contactName, [FromForm] int contactNumber, [FromForm]
             int price, [FromForm] string? description, [FromForm] string? imagelink, [FromForm] DateTime auctionDateTime)
         {
-            // Konvertera från FormData till Car-objekt
+
             Car car = new Car
             {
                 Brand = brand,
@@ -71,7 +69,6 @@ namespace CarShopAPI.Controllers
                 AuctionDateTime = auctionDateTime
             };
 
-            // Hantera bilduppladdningen här
             if (imageFile != null && imageFile.Length > 0)
             {
                 var uploadsFolderPath = Path.Combine(_hostEnvironment.WebRootPath, "uploads");
@@ -85,7 +82,7 @@ namespace CarShopAPI.Controllers
                 {
                     await imageFile.CopyToAsync(stream);
                 }
-                car.Imagelink = "/uploads/" + uniqueFileName; // Spara den relativa sökvägen till bilden
+                car.Imagelink = "/uploads/" + uniqueFileName;
             }
 
             var createdArticle = await _articleRepository.AddArticle(car);

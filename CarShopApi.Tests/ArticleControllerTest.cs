@@ -3,10 +3,10 @@ using CarShopAPI.Controllers;
 using CarShopAPI.Dto;
 using Data.Repositories;
 using Entites;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Moq;
-using Microsoft.AspNetCore.Hosting;
 
 namespace CarShopApi.Tests
 {
@@ -27,7 +27,6 @@ namespace CarShopApi.Tests
             _loggerMock = new Mock<ILogger<ArticleController>>();
             IWebHostEnvironment hostEnvironment;
 
-            // Additional setups if needed
 
             sut = new ArticleController(_articleRepositoryMock.Object, _mapperMock.Object, _loggerMock.Object, _hostEnvironment);
         }
@@ -66,43 +65,7 @@ namespace CarShopApi.Tests
             Assert.IsInstanceOf(typeof(NotFoundResult), result);
 
         }
-        //[Test]
-        //public async Task AddArticle_ReturnsNewCarDto_WhenFire()
-        //{
-        //    // ARRANGE 
-        //    var newArticle = new Car { Description = "Volvo XC90" };
-        //    var createdArticle = new Car
-        //    {
-        //        Id = 1,
-        //        Brand = "Volvo",
-        //        Model = "XC90",
-        //        Year = 2021,
-        //        MileAge = 4120,
-        //        Transmission = "Fjantomat",
-        //        Price = 610000,
-        //        ContactName = "Holger",
-        //        ContactNumber = 073020954,
-        //        FuelType = "LaddHybrid",
-        //        Description = "Fin Volvo som har agerat företagsbil",
-        //        Imagelink = "",
-        //        AuctionDateTime = new DateTime(2023, 11, 25, 15, 30, 0)
-        //};
-
-        //    _articleRepositoryMock.Setup(x => x.AddArticle(newArticle)).ReturnsAsync(createdArticle);
-
-        //    // ACT
-        //    var result = await sut.PostArticle(newArticle);
-
-        //    // ASSERT
-        //    Assert.IsNotNull(result);
-        //    Assert.IsInstanceOf<ActionResult<CarDto>>(result);
-
-        //    var okResult = result.Result as CreatedAtActionResult;
-        //    Assert.IsNotNull(okResult);
-        //    Assert.IsInstanceOf<CreatedAtActionResult>(result.Result);
-        //    Assert.AreEqual(201, okResult.StatusCode);
-
-        //}
+        
         [Test]
         public async Task PutArticle_ReturnsUpdatedArticle()
         {

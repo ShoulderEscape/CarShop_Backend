@@ -15,5 +15,5 @@ public class CarDto
     public string? Description { get; set; }
     public string? Imagelink { get; set; }
     public DateTime AuctionDateTime { get; set; }
- 
+
 }
